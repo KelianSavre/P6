@@ -2,7 +2,7 @@ const reponseworks = await fetch("http://localhost:5678/api/works")
 const works = await reponseworks.json()
 
 console.log(works)
-let userIsLoggedIn = false
+let userIsLoggedIn = true
 
 function affichageworks(works){
     for (let i = 0; i < works.length; i++){
@@ -44,6 +44,38 @@ boutonFiltresHotel.innerText = "Hôtel & restaurants"
 
 if (userIsLoggedIn === true){
     filtresPhoto.innerHTML = ""
+    const divHeader=document.getElementById("header_div")
+    const divProjets=document.querySelector(".Projets")
+    
+
+    divHeader.classList.remove("display_none")
+    divHeader.classList.add("header-edition")
+    const iconeEdition = document.createElement("i")
+    iconeEdition.classList.add("fa-regular", "fa-pen-to-square")
+    const texteHeader=document.createElement("p")
+    texteHeader.innerText="Mode édition"
+    
+    const divModificationProjet=document.createElement("div")
+
+    const texteProjets=document.createElement("p")
+    texteProjets.innerText="modifier"
+
+    divHeader.appendChild(iconeEdition)
+    divHeader.appendChild(texteHeader)
+
+    divProjets.appendChild(divModificationProjet)
+    divModificationProjet.appendChild(iconeEdition)
+    divModificationProjet.appendChild(texteProjets)
+
+    const LienLoginLogout=document.getElementById("Login_Logout")
+    LienLoginLogout.href=""
+    LienLoginLogout.innerText="logout"
+    LienLoginLogout.addEventListener("click", function(){
+        window.sessionStorage.removeItem("token")
+        
+    })
+
+
 }else{
     filtresPhoto.appendChild(boutonFiltresTous)
     filtresPhoto.appendChild(boutonFiltresObjets)
