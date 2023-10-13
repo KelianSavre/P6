@@ -349,3 +349,66 @@ footer{
 	font-size: 14px;
 	font-weight: 400;
 }
+
+#Login_Logout:hover{
+	color: #B1663C;
+}
+
+.modale_Suppression{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.3);
+	display: none;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+}
+.modale_Contenu{
+	width: 630px;
+	border-radius:10px ;
+	background-color: white;
+	padding-left: 100px;
+	padding-right: 100px;
+	padding-top: 60px;
+	padding-bottom: 60px;
+	max-width: calc(100vw - 20px);
+	max-height: calc(100vh - 20px);
+	overflow: auto;
+	position: relative;
+	box-sizing: border-box;
+
+}
+.modale_Contenu hr{
+	width: 420px;
+	color: rgba(179, 179, 179, 1);
+	
+}
+
+.modale_Fermeture{
+	font-size: 24px;
+	position: absolute;
+	right: 20px;
+	top: 15px;
+}
+.modale_Contenu h3{
+	font-size: 26px;
+	font-family: 'Work Sans';
+	text-align: center;
+	padding-bottom: 40px;
+}
+
+.modale_Gallerie{
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 5px;
+	grid-row-gap: 25px;
+	padding-bottom: 40px;
+}
+
+.modale_Gallerie img{
+	width: 76.86px;
+}

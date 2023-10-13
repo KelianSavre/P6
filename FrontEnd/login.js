@@ -5,6 +5,10 @@ const ZonePassword = document.getElementById("password")
 const ZoneErreur= document.querySelector(".login_error")
 const ErreurLogin = document.createElement("p")
 
+function Redirection(){
+    document.location.href="index.html"
+}
+
 
 function Login(){
     boutonConnection.addEventListener("click", async function(event){
@@ -28,12 +32,9 @@ function Login(){
                 
                 .then(function(reponseConvertie){
                     
-                    window.sessionStorage.setItem("token",reponseConvertie.token)
-                    const test = window.sessionStorage.getItem("token")
-                    console.log(test)
-                    .then(function(){
-                        document.location.href="index.html"
-                    })
+                    window.sessionStorage.setItem("tokenSophieBluel01",reponseConvertie.token)
+                    
+                    Redirection()
                 })
             }else{
                 
