@@ -343,6 +343,7 @@ footer{
 	top: 8px;
 	right: 360px;
 	display: flex;
+	cursor: pointer;
 }
 .Projets p{
 	font-family: 'Work Sans';
@@ -354,7 +355,7 @@ footer{
 	color: #B1663C;
 }
 
-.modale_Suppression{
+.modale{
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -372,8 +373,8 @@ footer{
 	background-color: white;
 	padding-left: 100px;
 	padding-right: 100px;
-	padding-top: 60px;
-	padding-bottom: 60px;
+	padding-top: 50px;
+	padding-bottom: 50px;
 	max-width: calc(100vw - 20px);
 	max-height: calc(100vh - 20px);
 	overflow: auto;
@@ -383,15 +384,16 @@ footer{
 }
 .modale_Contenu hr{
 	width: 420px;
-	color: rgba(179, 179, 179, 1);
+	color: #B3B3B3;
 	
 }
 
 .modale_Fermeture{
 	font-size: 24px;
 	position: absolute;
-	right: 20px;
-	top: 15px;
+	right: 35px;
+	top: 28px;
+	cursor: pointer;
 }
 .modale_Contenu h3{
 	font-size: 26px;
@@ -411,4 +413,60 @@ footer{
 
 .modale_Gallerie img{
 	width: 76.86px;
+	
+}
+.modale_Gallerie figure{
+	position: relative;
+}
+
+.modale_Gallerie .bouton_suppression-modale{
+	width: 17px;
+	height: 17px;
+	border-radius: 2px;
+	background-color: black;
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+.modale_Gallerie .fa-trash-can{
+	color: white;
+	font-size: 9px;
+}
+
+#modale_Ajout{
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#modale_Suppression button{
+	border:#1D6154 1px solid;
+	
+	cursor: pointer;
+	border-radius: 60px;
+	padding: 10px;
+	font-family: 'Syne';
+	font-weight: 700;
+	font-size: 16px;
+	width: 237px;
+	box-sizing: border-box;
+	margin-top: 30px;
+}
+#modale_Suppression{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+#modale_Ajout .modale_Retour{
+	position: absolute;
+	left: 35px;
+	top: 28px;
+	cursor: pointer;
+	font-size: 21px;
 }
