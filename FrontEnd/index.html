@@ -68,9 +68,28 @@
 						<i class="fa-solid fa-arrow-left modale_Retour"></i>
 						<h3>Ajout Photo</h3>
 						<div class="modale_Formulaire">
-							
+							<form id="Formulaire_Envoi-Img">
+								<label for="ajout_image" id="image_Label">
+									<i class="fa-regular fa-image"></i>
+									
+									<span class="border_ajout-Img">+ Ajouter photo</span>
+									
+									<span id="subtitle-image_Label">jpg, png : 4mo max</span>
+								</label>
+								<input type="file" name="ajout_image" id="ajout_image" required accept=".jpg, .jpeg, .png">
+								<label for="titreImg">Titre</label>
+								<input type="text" name="titreImg" id="titreImg" required>
+								<label for="categorie">Catégorie</label>
+								<div id="select-chevron_display">
+									<select name="categorie" id="categorie" title=""  required>
+										<option value="" selected label=" " disabled hidden></option>
+									</select>
+									<i class="fa-solid fa-chevron-down"></i>
+								</div>
+								<hr>
+							</form>
 						</div>
-						<hr>
+						
 					</div>
 				</div>
 				<div class="gallery">

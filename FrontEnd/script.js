@@ -1,10 +1,10 @@
 const reponseworks = await fetch("http://localhost:5678/api/works")
-const works = await reponseworks.json()
+let works = await reponseworks.json()
 
-console.log(works)
-console.log(window.sessionStorage.getItem("tokenSophieBluel01"))
 
 let userIsLoggedIn
+
+let Token= window.sessionStorage.getItem("tokenSophieBluel01")
 /*Definit si l'utilisateur est connecté ou non en regardant si la valeur du token est differente de null */
 if(window.sessionStorage.getItem("tokenSophieBluel01")!= null){
     userIsLoggedIn=true
@@ -12,7 +12,7 @@ if(window.sessionStorage.getItem("tokenSophieBluel01")!= null){
     userIsLoggedIn=false
 }
 
-console.log(userIsLoggedIn)
+
 /*Declaration des elements pour les boutons filtres et ajout des classes */
 const filtresPhoto = document.querySelector(".filtres")
 
@@ -106,6 +106,145 @@ const closeModal = function(e){
 const stopPropagation = function(e){
     e.stopPropagation()
 }
+
+/*Declaration et modification des elements du formulaire d'ajout des projets*/
+
+const Formulaire=document.querySelector("#Formulaire_Envoi-Img")
+const BoutonValidationFormulaire=document.createElement("input")
+BoutonValidationFormulaire.setAttribute("type","button")
+BoutonValidationFormulaire.setAttribute("value","Valider")
+BoutonValidationFormulaire.classList.add("bouton-formulaire","bouton-formulaire_inactif")
+
+const ZoneImage=document.getElementById("ajout_image")
+const ZoneTitre=document.getElementById("titreImg")
+const ZoneCategorie=document.getElementById("categorie")
+const LabelZoneImg=document.getElementById("image_Label")
+const ImagePrevisualisée= document.createElement("img")
+/* Previsualisation image */
+
+ZoneImage.onchange = function(){
+    let LectureFichier = new FileReader()
+    LectureFichier.readAsDataURL(ZoneImage.files[0])
+    
+    LectureFichier.onload = function(){
+        
+        LabelZoneImg.innerHTML=""
+        
+        ImagePrevisualisée.setAttribute("src", LectureFichier.result)
+        LabelZoneImg.appendChild(ImagePrevisualisée)
+        
+    }
+
+}
+
+
+/*Recuperation des categories depuis la base de donnees et ajout des options en consequence sur le formulaire */
+
+const reponseCategories = await fetch("http://localhost:5678/api/categories")
+const Categories = await reponseCategories.json()
+
+
+
+for (let i=0; i <Categories.length;i++){
+    let OptionCategorie = document.createElement("option")
+    OptionCategorie.setAttribute("value",Categories[i].id)
+    OptionCategorie.innerText=Categories[i].name
+    ZoneCategorie.appendChild(OptionCategorie)
+}
+ 
+/* BOUTON RENDU INVALIDE SI FORMULAIRE PAS CORRECT */
+function VerificationChampFormulaire(balise){
+    if (balise.value === ""){
+        balise.classList.add("champ-formulaire_incorrect")
+    } else{
+        balise.classList.remove("champ-formulaire_incorrect")
+    }
+}
+function VerificationFichier(balise){
+    if (balise.files[0].type == "image/png" || balise.files[0].type == "image/jpg" || balise.files[0].type == "image/jpeg" || balise.files[0].size<4000000){
+        balise.classList.remove("champ-formulaire_incorrect")
+        
+    }else{
+        balise.classList.add("champ-formulaire_incorrect")
+        alert("Fichier de type incorrect ou taille supérieure a 4 Mo")
+    }
+}
+
+function ValidationBoutonEnvoiFormulaire(bouton){
+    if (ZoneTitre.classList.contains("champ-formulaire_incorrect")===true|| ZoneCategorie.classList.contains("champ-formulaire_incorrect")===true|| ZoneImage.classList.contains("champ-formulaire_incorrect")===true){
+        bouton.classList.add("bouton-formulaire_inactif")
+        bouton.setAttribute("disabled", "")
+    }else{
+        bouton.classList.remove("bouton-formulaire_inactif")
+        bouton.classList.add("bouton-formulaire_actif")
+        bouton.removeAttribute("disabled")
+    }
+}
+
+VerificationChampFormulaire(ZoneTitre)
+VerificationChampFormulaire(ZoneCategorie)
+VerificationChampFormulaire(ZoneImage)
+
+ZoneTitre.addEventListener("change",()=>{
+    VerificationChampFormulaire(ZoneTitre)
+    ValidationBoutonEnvoiFormulaire(BoutonValidationFormulaire)
+})
+ZoneCategorie.addEventListener("change",()=>{
+    VerificationChampFormulaire(ZoneCategorie)
+    ValidationBoutonEnvoiFormulaire(BoutonValidationFormulaire)
+})
+ZoneImage.addEventListener("change",()=>{
+    VerificationFichier(ZoneImage)
+    ValidationBoutonEnvoiFormulaire(BoutonValidationFormulaire)
+})
+
+
+/*Envoi du formulaire pour requete POST */
+
+
+
+
+
+BoutonValidationFormulaire.addEventListener("click",async function(event){
+    event.preventDefault()
+    let formData = new FormData()
+    formData.append("image",ZoneImage.files[0])
+    formData.append("title",ZoneTitre.value)
+    formData.append("category",ZoneCategorie.value)
+    
+    for (const value of formData.values()){
+        console.log(value)
+    }
+    
+    await fetch("http://localhost:5678/api/works",{
+        method:"POST",
+        headers: {
+            accept:"application/json",
+            Authorization: `Bearer ${Token}`,
+        },
+        body:formData,
+    }).then (async function(response){
+        if (response.ok===true){
+            
+            const ReponseWorksUpdated = await fetch("http://localhost:5678/api/works")
+            const worksUpdated = await ReponseWorksUpdated.json()
+            document.querySelector(".gallery").innerHTML=""
+            affichageworks(worksUpdated)
+            document.querySelector(".modale_Gallerie").innerHTML=""
+            affichageEtSuppressionworks(worksUpdated)
+            
+            alert("L'ajout du projet est réussi")
+            
+            
+            return
+            
+            
+        }else{
+            alert("Echec de l'ajout du projet, formulaire incorrect")
+        }
+    })
+})
+
 /*Affichage des projets dans la modale et du bouton suppression et sa fonctionnalité*/
 const affichageEtSuppressionworks = function(works){
     for (let i = 0; i < works.length; i++){
@@ -127,13 +266,10 @@ const affichageEtSuppressionworks = function(works){
         GallerieModale.appendChild(figureModale)
         
         DivSuppression.addEventListener("click",async function(event){
-            
             event.preventDefault()
             event.stopPropagation()
             const IDSuppression = works[i].id
-            console.log(IDSuppression)
-            let Token= window.sessionStorage.getItem("tokenSophieBluel01")
-
+        
             await fetch(`http://localhost:5678/api/works/${IDSuppression}`,{
                 method:"DELETE",
                 headers:{
@@ -141,10 +277,14 @@ const affichageEtSuppressionworks = function(works){
                     Authorization: `Bearer ${Token}`,
                     
                 }
-            }).then (function(response){
+            }).then (async function(response){
                 if(response.status>=200 && response.status<300){
-                    return false
-                    
+                    const ReponseWorksUpdated = await fetch("http://localhost:5678/api/works")
+                    const worksUpdated = await ReponseWorksUpdated.json()
+                    document.querySelector(".gallery").innerHTML=""
+                    affichageworks(worksUpdated)
+                    document.querySelector(".modale_Gallerie").innerHTML=""
+                    affichageEtSuppressionworks(worksUpdated)          
                     
                 }else{
                     alert("Echec de la suppression du projet")
@@ -202,7 +342,6 @@ if (userIsLoggedIn === true){
     boutonChangementModale.classList.add("bouton_actif")
     boutonChangementModale.innerText="Ajouter une photo"
     
-    
     modaleSuppressionProjet.appendChild(boutonChangementModale)
 
     boutonChangementModale.addEventListener("click", function(event){
@@ -219,6 +358,10 @@ if (userIsLoggedIn === true){
         modaleSuppressionProjet.style.display="flex"
         modaleAjoutProjet.style.display="none"
     })
+
+    /*Ajout du bouton de validation du formulaire d'ajout de projet par javascript pour securiser davantage*/
+    
+    Formulaire.appendChild(BoutonValidationFormulaire)
 
 }else{
     filtresPhoto.appendChild(boutonFiltresTous)

@@ -298,6 +298,11 @@ a{
 	height: 51px;
 	margin-bottom: 30px;
 	margin-top: 15px;
+	font-family: 'Work Sans';
+	font-size: 14px;
+	font-weight: 500;
+	outline: 0;
+	padding-left: 15px;
 }
 footer{
 	background-color: rgb(255,255,255,1);
@@ -399,7 +404,7 @@ footer{
 	font-size: 26px;
 	font-family: 'Work Sans';
 	text-align: center;
-	padding-bottom: 40px;
+	padding-bottom: 30px;
 }
 
 .modale_Gallerie{
@@ -469,4 +474,129 @@ footer{
 	top: 28px;
 	cursor: pointer;
 	font-size: 21px;
+}
+
+.modale_Formulaire form{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 420px ;
+	position: relative;
+}
+
+.modale_Formulaire label{
+	font-family: 'Work Sans';
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.modale_Formulaire input,select{
+	width: 100%;
+	box-shadow: 0px 4px 14px 0px rgba(0,0,0,0.09);
+	border:none;
+	height: 51px;
+	margin-bottom: 30px;
+	margin-top: 15px;
+	font-family: 'Work Sans';
+	font-size: 14px;
+	font-weight: 400;
+	outline: 0;
+	padding-left: 15px;
+}
+
+.modale_Formulaire select{
+	padding-right: 20px;
+	appearance: none;
+	position: relative;
+	
+}
+
+#select-chevron_display{
+	position: relative;
+}
+
+.fa-chevron-down{
+	position: absolute;
+	right: 20px;
+	top: 35px;
+	font-size: 9px;
+	color: #6C6C6C;
+}
+
+#ajout_image{
+	visibility: hidden;
+	height: 0px;
+	margin: 0px;
+}
+#image_Label{
+	background-color: #E8F1F6;
+	height: 169px;
+	border-radius: 3px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 30px;
+	row-gap: 10px;
+	cursor: pointer;
+}
+
+#image_Label .fa-image{
+	color: #B9C5CC;
+	font-size: 65px;
+}
+
+#subtitle-image_Label{
+	color:#444444;
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 11px;
+	
+}
+
+#image_Label .border_ajout-Img{
+	background-color: #B9C5CC;
+	color: #306685;
+	border-radius: 50px;
+	width: 173px;
+	height: 36px;
+	font-family: 'Work Sans';
+	font-size: 14px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#image_Label img{
+	object-fit: contain;
+	max-height: 169px;
+}
+
+
+.modale_Formulaire .bouton-formulaire_inactif{
+	background-color: #A7A7A7;
+}
+
+.modale_Formulaire .bouton-formulaire_actif{
+	background-color: #1D6154;
+	cursor: pointer;
+}
+
+.modale_Formulaire .bouton-formulaire{
+	width: 237px;
+	height: 36px;
+	color: white;
+	border-radius:60px;
+	font-size: 14px;
+	font-family: 'Syne';
+	font-weight: 700;
+	position: absolute;
+	bottom: -10px;
+	left: 91.5px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.modale_Formulaire hr{
+	margin-bottom: 50px;
 }
